@@ -51,7 +51,7 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const isDeleted = await Product.destroy({
-            where: { id: req?.params?.id },
+            where: { id: req?.params?.id }
         });
 
         res.status(204).json(isDeleted);
