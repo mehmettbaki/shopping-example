@@ -27,6 +27,9 @@ const getProductById = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
+        const products = await Product.findAll({});
+
+        res.status(200).json(products);
     } catch (error) {
         return res.status(500).json(error.message);
     }
@@ -34,11 +37,12 @@ const getAllProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     try {
+        const { productName, productDescription, price } = req.body;
 
-        const { productName, productDescription, price } =req.body
-
-        const updatedProduct = await Product.update({productName,productDescription, price},{where : {id: req.params.id}})
-    
+        const updatedProduct = await Product.update(
+            { productName, productDescription, price },
+            { where: { id: req.params.id } }
+        );
     } catch (error) {
         return res.status(500).json(error.message);
     }
@@ -46,12 +50,11 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     try {
+        const isDeleted = await Product.destroy({
+            where: { id: req?.params?.id },
+        });
 
-        
-        const isDeleted = await Product.destroy({where : {id : req?.params?.id}})
-
-        res.status(204).json(isDeleted)
-
+        res.status(204).json(isDeleted);
     } catch (error) {
         return res.status(500).json(error.message);
     }

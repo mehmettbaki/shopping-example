@@ -1,3 +1,5 @@
+const { User,  }= require('../db')
+
 
 const createUser = async (req, res)=>{
 
