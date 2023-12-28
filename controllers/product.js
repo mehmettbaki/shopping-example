@@ -9,6 +9,8 @@ const createProduct = async (req, res) => {
             productDescription,
             price,
         });
+        console.log('new prodd')
+        console.log(newProduct)
 
         return res.status(201).json(newProduct);
     } catch (error) {
@@ -19,6 +21,8 @@ const createProduct = async (req, res) => {
 const getProductById = async (req, res) => {
     try {
         const getProduct = await Product.findByPk(req.params.id);
+        if(!getProduct){return res.status(404).json('product not found')}
+
         return res.status(200).json(getProduct);
     } catch (error) {
         return res.status(500).json(error.message);
@@ -53,8 +57,10 @@ const deleteProduct = async (req, res) => {
         const isDeleted = await Product.destroy({
             where: { id: req?.params?.id }
         });
-
-        res.status(204).json(isDeleted);
+        if(!isDeleted){
+            res.status(404).json('product not found');
+        }else {
+        res.status(204).json({isDeleted :true });}
     } catch (error) {
         return res.status(500).json(error.message);
     }

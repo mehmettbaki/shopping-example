@@ -10,10 +10,10 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.get('/', (req, res)=>{
+app.get('/', (req, res)=>{
 
-// res.json('hello')
-// })
+res.json('hello')
+})
 
 app.use('/users', userRoute);
 app.use('/products', productRoute)
@@ -26,7 +26,9 @@ app.use((err, req, res, next) => {
     res.status(500).json(err.message || 'server error');
 });
 
-app.listen(7001, () => {
-    //connect()
+app.listen(7001, async() => {
+
+    // connnet mysql
+    await connect()
     console.log('server running');
 });
