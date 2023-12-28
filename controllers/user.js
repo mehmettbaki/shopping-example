@@ -43,16 +43,42 @@ const getAllUsers = async (req, res) => {
         return res.status(500).json(error.message);
     }
 };
+// verison v1 use User model find method. cannot return updated User
+// const updateUser = async (req, res) => {
+//     try {
+//         const { isim, soyisim, email, sifre } = req.body;
+//         hashedPassword = await bcrypt.hash(sifre, 10);
+//         const [_, isUpdated] = await User.update(
+//             { isim, soyisim, email, sifre: hashedPassword },
+//             { where: { id: req?.params?.id }, returning: true } // returning true only works with postgres and mssql
+//         );
+//         if (!isUpdated) {
+//             return res.status(404).json('user does not updated');
+//         } else {
+//             return res.status(200).json(`${req.params.id} user updated`);
+//         }
+//     } catch (error) {
+//         return res.status(500).json(error.message);
+//     }
+// };
+
+// version v2 return updated. use user instance find method
 const updateUser = async (req, res) => {
     try {
         const { isim, soyisim, email, sifre } = req.body;
         hashedPassword = await bcrypt.hash(sifre, 10);
-        const updatedUser = await User.findOne(
-            { isim, soyisim, email, sifre: hashedPassword },
-            { where: { id: req?.params?.id } }
-        );
 
-        return res.status(200).json(updateUser);
+        const user = await User.findByPk(req.params.id)
+        if (!user) {
+            return res.status(404).json('user does not found');
+        }
+        const isUpdated = await  user.update({isim, soyisim, email, sifre : hashedPassword})
+
+        if (!isUpdated) {
+            return res.status(404).json('user does not updated');
+        } else {
+            return res.status(200).json(isUpdated);
+        }
     } catch (error) {
         return res.status(500).json(error.message);
     }
