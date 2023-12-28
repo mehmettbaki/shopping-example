@@ -37,7 +37,7 @@ const updateProduct = async (req, res) => {
 
         const { productName, productDescription, price } =req.body
 
-        const updatedProduct = await Product.update({})
+        const updatedProduct = await Product.update({productName,productDescription, price},{where : {id: req.params.id}})
     
     } catch (error) {
         return res.status(500).json(error.message);
@@ -46,6 +46,12 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     try {
+
+        
+        const isDeleted = await Product.destroy({where : {id : req?.params?.id}})
+
+        res.status(204).json(isDeleted)
+
     } catch (error) {
         return res.status(500).json(error.message);
     }
