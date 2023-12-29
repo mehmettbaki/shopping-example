@@ -89,10 +89,12 @@ const deleteUser = async (req, res) => {
         const isDeleted = await User.destroy({
             where: { id: req?.params?.id },
         });
-        if (!isDeleted) {
-            res.status(404).json('user not found');
+        console.log(isDeleted)
+        if (isDeleted) {
+            console.log('return tarafı')
+            return res.status(204).json('user deleted');
         } else {
-            res.status(204).json(`${req.params.id} user deleted`);
+            return res.status(404).json('user not found');
         }
     } catch (error) {
         return res.status(500).json(error.message);
