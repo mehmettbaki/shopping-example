@@ -1,5 +1,5 @@
 const { OrderProducts, Order, Product, User } = require('../db');
-const getOrderProductsResponse = require('../utils/sepetresponse')
+const getOrderProductsResponse = require('../utils/getOrderProductsResponse')
 
 
 //sepete ekle
