@@ -30,8 +30,8 @@ const createOrderProduct = async (req, res) => {
         const added = await order.addProduct(product, {
             through: { adet: +req.body.adet || 1 },
         });
-
-        return res.json(201).json('sepete eklendi');
+        if(!added){return res.status(400).json('ürün sepete eklenemedi')} 
+        return res.status(201).json('sepete eklendi');
     } catch (error) {
         return res.status(500).json(error.message);
     }
@@ -72,11 +72,7 @@ const getOrderProducts = async (req, res) => {
 
         console.log(total);
 
-        return res.status(200).json({
-            products: getOrderProductsResponse(products) || [],
-            total: total,
-            success: true,
-        });
+        return res.status(200).json(getOrderProductsResponse(products, total));
     } catch (error) {
         return res.status(500).json(error.message);
     }
