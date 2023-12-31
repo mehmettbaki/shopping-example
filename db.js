@@ -124,7 +124,7 @@ const connect = async () => {
     try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
-        await sequelize.sync({alter :true});
+        await sequelize.sync();
         console.log('All models were synchronized successfully.');
 
         //const result = await Product.create(newProduct);

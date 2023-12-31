@@ -1,6 +1,6 @@
 const { OrderProducts, Order, Product, User } = require('../db');
-const getOrderProductsResponse = require('../utils/getOrderProductsResponse')
-
+const getOrderProductsResponse = require('../DTO/getOrderProductsResponse');
+const calculateTotal = require('../utils/calculateTotal');
 
 //sepete ekle
 //  req.body.productId
@@ -27,27 +27,21 @@ const createOrderProduct = async (req, res) => {
             return res.status(404).json('product not found');
         }
 
-        const added = await order.addProduct(product, {through: {adet : +req.body.adet || 1 }})
+        const added = await order.addProduct(product, {
+            through: { adet: +req.body.adet || 1 },
+        });
 
-        console.log(added)
-
-
-
-
-
-   
-
-        res.json(200);
+        return res.json(201).json('sepete eklendi');
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json(error.message);
     }
 };
 //sepetteki ürünü çağır
 const getOrderProductbyId = async (req, res) => {
     try {
-        res.json(200);
+        return res.json(200);
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json(error.message);
     }
 };
 //sepettekileri çağır
@@ -74,9 +68,7 @@ const getOrderProducts = async (req, res) => {
 
         const products = await order.getProducts();
 
-        const total = order.Products.reduce((total, p) => {
-            return total + p.price * p.OrderProducts.adet;
-        }, 0);
+        const total = calculateTotal(order);
 
         console.log(total);
 
@@ -86,15 +78,15 @@ const getOrderProducts = async (req, res) => {
             success: true,
         });
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json(error.message);
     }
 };
 //sepettekin ürün günncelle
 const updateOrderProduct = async (req, res) => {
     try {
-        res.json(200);
+        return res.json(200);
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json(error.message);
     }
 };
 //sepetteki ürünü çıkar
@@ -102,7 +94,7 @@ const deleteOrderProduct = async (req, res) => {
     try {
         res.json(200);
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json(error.message);
     }
 };
 
