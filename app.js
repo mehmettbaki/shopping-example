@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
+const cardRoute =require('./routes/card')
 const { connect } = require('./db');
 
 const app = express();
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/orders', orderRoute);
+app.use('/card', cardRoute)
 
 app.use((req, res, next) => {
     res.status(404).json('not found');
