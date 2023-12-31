@@ -1,5 +1,5 @@
 const { OrderProducts, Order, Product, User } = require('../db');
-const sepetresponse = require('../utils/sepetresponse')
+const getOrderProductsResponse = require('../utils/sepetresponse')
 
 
 //sepete ekle
@@ -81,7 +81,7 @@ const getOrderProducts = async (req, res) => {
         console.log(total);
 
         return res.status(200).json({
-            products: sepetresponse(products) || [],
+            products: getOrderProductsResponse(products) || [],
             total: total,
             success: true,
         });

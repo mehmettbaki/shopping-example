@@ -1,4 +1,4 @@
-const sepetresponse = (urunler) => {
+const getOrderProductsResponse = (urunler) => {
     return urunler.map((u) => {
         let urun = {
             productName: u.productName,
@@ -11,4 +11,4 @@ const sepetresponse = (urunler) => {
     });
 };
 
-module.exports = sepetresponse
+module.exports = getOrderProductsResponse
