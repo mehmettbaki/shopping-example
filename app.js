@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
@@ -15,6 +16,9 @@ app.get('/', (req, res) => {
     res.json('hello');
 });
 
+
+
+app.use('/auth', authRoute)
 app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/orders', orderRoute);

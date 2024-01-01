@@ -1,7 +1,27 @@
 const { User } = require('../db');
 const bcrypt = require('bcrypt');
 
-const createUser = async (req, res) => {
+
+const login = async (req, res)=>{
+
+    try {
+        const {email, sifre} =req.body
+
+        const user = await User.findOne({where : {email : email}})
+        if(!user){return res.status(404).json('user does not exist! please register')}
+
+        const passwordCorrect = await bcrypt.compare(sifre, user.sifre)
+
+        console.log(passwordCorrect)
+
+        return res.json(passwordCorrect)
+
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+}
+
+const registerUser = async (req, res) => {
     try {
         const { isim, soyisim, email, sifre } = req.body;
 
@@ -102,7 +122,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-    createUser,
+    registerUser,
     getAllUsers,
     getUserById,
     updateUser,

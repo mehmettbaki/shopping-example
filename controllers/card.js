@@ -53,10 +53,14 @@ const getProductFromCard = async (req, res) => {
             return res.status(404).json('user does not exist');
         }
 
-        const [order, isCreated] = await Order.findOrCreate({
+        const order = await Order.findOne({
             where: { UserId: userId, onay: false },
             include: [{ model: Product, required: true }],
         });
+
+        if (!order) {
+            return res.status(200).json('sepet boş');
+        }
 
         const product = await Product.findByPk(req.params.id);
         if (!product) {
@@ -106,12 +110,12 @@ const getProductsFromCard = async (req, res) => {
             return res.status(404).json('user now exist');
         }
 
-        const [order, isCreated] = await Order.findOrCreate({
+        const order= await Order.findOne({
             where: { UserId: userId, onay: false },
             include: [{ model: Product, required: true }],
         });
 
-        if (isCreated) {
+        if (!order) {
             return res.status(200).json('sepet boş');
         }
 
