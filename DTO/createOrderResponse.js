@@ -1,6 +1,5 @@
-const getCardResponse = (products, total) => {
-    
-    const responseProducts = products.map((u) => {
+const getOrderResponse = (order, products) => {
+    const pro = products.map((u) => {
         let product = {
             productId: u.id,
             productName: u.productName,
@@ -14,10 +13,12 @@ const getCardResponse = (products, total) => {
     });
 
     return {
-        products: responseProducts,
-        total: total,
-        success: true,
+        OrderId: order.id,
+        UserId: order.UserId,
+        TotalPrice: order.totalPrice,
+        Onay: order.onay,
+        Products: pro,
     };
 };
 
-module.exports = getCardResponse;
+module.exports = getOrderResponse;
