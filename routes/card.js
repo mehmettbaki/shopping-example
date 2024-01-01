@@ -22,7 +22,7 @@ router.get('/:id',getOrderProductbyId )
 router.put('/:id', updateOrderProduct)
 
 //sepetteki ürünü çıkar
-router.delete('/id', deleteOrderProduct) 
+router.delete('/:id', deleteOrderProduct) 
 
 
 
