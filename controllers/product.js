@@ -50,7 +50,7 @@ const updateProduct = async (req, res) => {
             { where: { id: req.params.id } }
         );
 
-        return res.status.json(updateProduct)
+        return res.status.json(updateProduct);
     } catch (error) {
         return res.status(500).json(error.message);
     }
