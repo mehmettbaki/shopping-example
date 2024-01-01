@@ -1,29 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const {
-    createOrderProduct,
-    getOrderProducts,
-    updateOrderProduct,
-    deleteOrderProduct,
-    getOrderProductbyId,
+    addProductToCard,
+    getProductsFromCard,
+    updateProductInCard,
+    deleteProductfromCard,
+    getProductFromCard,
 } = require('../controllers/card');
 
-
 //sepete ekle
-router.post('/',createOrderProduct); 
+router.post('/', addProductToCard);
 
 //sepettekileri çağır
-router.get('/', getOrderProducts )
+router.get('/', getProductsFromCard);
 
 //sepetteki ürünü çağır
-router.get('/:id',getOrderProductbyId )
+router.get('/:id', getProductFromCard);
 
 //sepettekin ürün günncelle
-router.put('/:id', updateOrderProduct)
+router.put('/:id', updateProductInCard);
 
 //sepetteki ürünü çıkar
-router.delete('/:id', deleteOrderProduct) 
+router.delete('/:id', deleteProductfromCard);
 
-
-
-module.exports = router
+module.exports = router;

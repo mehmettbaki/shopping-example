@@ -6,7 +6,7 @@ const calculateTotal = require('../utils/calculateTotal');
 //  req.body.productId
 // req.body.adet
 
-const createOrderProduct = async (req, res) => {
+const addProductToCard = async (req, res) => {
     const userId = 'e9213d32-a32e-46f5-a085-6b513129fce1';
     const orderID = 'ac7002eb-ef60-463d-af3f-ec1abed1710a';
 
@@ -42,7 +42,7 @@ const createOrderProduct = async (req, res) => {
     }
 };
 //sepetteki ürünü çağır
-const getOrderProductbyId = async (req, res) => {
+const getProductFromCard = async (req, res) => {
     try {
         const userId = 'e9213d32-a32e-46f5-a085-6b513129fce1';
         const orderID = 'ac7002eb-ef60-463d-af3f-ec1abed1710a';
@@ -94,7 +94,7 @@ const getOrderProductbyId = async (req, res) => {
     }
 };
 //sepettekileri çağır
-const getOrderProducts = async (req, res) => {
+const getProductsFromCard = async (req, res) => {
     try {
         // userid token ile alınacak
         const userId = 'e9213d32-a32e-46f5-a085-6b513129fce1';
@@ -127,7 +127,7 @@ const getOrderProducts = async (req, res) => {
     }
 };
 //sepettekin ürün günncelle    put product id quantity
-const updateOrderProduct = async (req, res) => {
+const updateProductInCard = async (req, res) => {
     try {
         // userid token ile alınacak
         const userId = 'e9213d32-a32e-46f5-a085-6b513129fce1';
@@ -176,7 +176,7 @@ const updateOrderProduct = async (req, res) => {
     }
 };
 //sepetteki ürünü çıkar
-const deleteOrderProduct = async (req, res) => {
+const deleteProductfromCard = async (req, res) => {
     try {
         const userId = 'e9213d32-a32e-46f5-a085-6b513129fce1';
         const orderID = 'ac7002eb-ef60-463d-af3f-ec1abed1710a';
@@ -213,9 +213,9 @@ const deleteOrderProduct = async (req, res) => {
 };
 
 module.exports = {
-    createOrderProduct,
-    getOrderProducts,
-    updateOrderProduct,
-    deleteOrderProduct,
-    getOrderProductbyId,
+    addProductToCard,
+    getProductsFromCard,
+    updateProductInCard,
+    deleteProductfromCard,
+    getProductFromCard,
 };
