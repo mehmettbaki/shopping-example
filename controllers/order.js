@@ -1,6 +1,6 @@
-const getOrderResponse = require('../DTO/createOrderResponse');
 const { Order, User, Product } = require('../db');
-const calculateTotal = require('../utils/calculateTotal')
+const getOrderResponse = require('../DTO/createOrderResponse');
+const calculateTotal = require('../utils/calculateTotal');
 // kullanıcının  bütün orderları listelenir
 // userid TOKENDAN ALINACAK
 const getAllOrders = async (req, res) => {
@@ -12,19 +12,7 @@ const getAllOrders = async (req, res) => {
             },
             include: 'Products',
         });
-
         console.log(orders.toJSON());
-
-        // const orderTotalPrice = order.Products.reduce((total, p) => {
-        //     return total + p.price * p.OrderProducts.adet;
-        // }, 0);
-
-        // console.log(orderTotalPrice);
-
-        // order.totalPrice = orderTotalPrice
-
-        // await order.save()
-
         return res.status(200).json(orders);
     } catch (error) {
         return res.status(500).json(error.message);
@@ -33,39 +21,35 @@ const getAllOrders = async (req, res) => {
 // sipariş onayla
 const createOrder = async (req, res) => {
     try {
+        // userid token ile alınacak
+        const userId = 'e9213d32-a32e-46f5-a085-6b513129fce1';
+        const orderID = 'ac7002eb-ef60-463d-af3f-ec1abed1710a';
 
-              // userid token ile alınacak
-              const userId = 'e9213d32-a32e-46f5-a085-6b513129fce1';
-              const orderID = 'ac7002eb-ef60-463d-af3f-ec1abed1710a';
-      
-              const user = await User.findByPk(userId);
-      
-              if (!user) {
-                  return res.status(404).json('user now exist');
-              }
-      
-              const [order, isCreated] = await Order.findOrCreate({
-                  where: { UserId: userId, onay: false },
-                  include: [{ model: Product, required: true }],
-              });
-      
-              if (isCreated) {
-                  return res.status(200).json('sepet boş');
-              }
-      
-              const products = await order.getProducts();
-      
-              order.totalPrice = calculateTotal(order);
-              order.onay = true
+        const user = await User.findByPk(userId);
 
-              await order.save()
+        if (!user) {
+            return res.status(404).json('user now exist');
+        }
 
+        const [order, isCreated] = await Order.findOrCreate({
+            where: { UserId: userId, onay: false },
+            include: [{ model: Product, required: true }],
+        });
 
-      
-              console.log(order.totalPrice);
-      
-              return res.status(200).json(getOrderResponse(order, products));
-        
+        if (isCreated) {
+            return res.status(200).json('sepet boş');
+        }
+
+        const products = await order.getProducts();
+
+        order.totalPrice = calculateTotal(order);
+        order.onay = true;
+
+        await order.save();
+
+        console.log(order.totalPrice);
+
+        return res.status(200).json(getOrderResponse(order, products));
     } catch (error) {
         return res.status(500).json(error.message);
     }
@@ -93,7 +77,6 @@ const getOrderById = async (req, res) => {
     }
 };
 
-
 // admin can update
 const updateOrder = async (req, res) => {
     try {
@@ -103,11 +86,9 @@ const updateOrder = async (req, res) => {
     }
 };
 
-
 //admin can delete
 const deleteOrder = async (req, res) => {
     try {
-        console.log('hitt');
         return res.send('delete order');
     } catch (error) {
         return res.status(500).json(error.message);
