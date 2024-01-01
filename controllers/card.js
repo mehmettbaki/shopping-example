@@ -184,7 +184,7 @@ const deleteOrderProduct = async (req, res) => {
         const user = await User.findByPk(userId);
 
         if (!user) {
-            return res.status(404).json('user now exist');
+            return res.status(404).json('user not exist');
         }
 
         const [order, isCreated] = await Order.findOrCreate({
@@ -203,9 +203,10 @@ const deleteOrderProduct = async (req, res) => {
 
 
 
-        const resp= await order.removeProduct(product)
+       const removed = await order.removeProduct(product)
+       if(!removed){ return res.status(404).json('ürün sepette yok')}
 
-        res.json(resp);
+        return res.status(200).json(`${req.params.id} ürün sepetten çıkarıldı.`);
     } catch (error) {
         return res.status(500).json(error.message);
     }
